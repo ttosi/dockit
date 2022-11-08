@@ -1,0 +1,10 @@
+{
+  "include": ["vite.config.*", "vitest.config.*", "cypress.config.*"],
+  "compilerOptions": {
+    "composite": true,
+    "types": ["node"],
+    "noImplicitAny": true,
+    "allowJs": true,
+    "checkJs": false
+  }
+}
