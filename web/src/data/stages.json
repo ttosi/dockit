@@ -1,8 +1,8 @@
 [
-  { "id": "new", "name": "New Idea" },
-  { "id": "thinking", "name": "Thinking About it" },
-  { "id": "planning", "name": "Planning it" },
-  { "id": "working", "name": "Working on it" },
-  { "id": "done", "name": "Done with it" },
-  { "id": "saved", "name": "Saved for later" }
+  { "id": "1", "name": "New Idea" },
+  { "id": "2", "name": "Thinking About it" },
+  { "id": "3", "name": "Planning it" },
+  { "id": "4", "name": "Working on it" },
+  { "id": "5", "name": "Done with it" },
+  { "id": "6", "name": "Saved it for later" }
 ]

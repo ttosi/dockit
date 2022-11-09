@@ -28,19 +28,18 @@
 
 <script setup lang="ts">
 import draggable from 'vuedraggable'
-import { useProjectStore } from '@/stores'
+import { useDocumentStore } from '@/stores'
 import ProjectCard from '@/components/ProjectCard.vue'
 import PartsList from './PartsList.vue'
 import TaskList from './TaskList.vue'
 
 const props = defineProps(['stage', 'projects'])
-const projectStore = useProjectStore()
+const { save } = useDocumentStore()
 
 const dragend = (stage: any, project: any) => {
   if (project['added']) {
     project['added']['element'].stage = stage
-    projectStore.project = project['added']['element']
-    projectStore.save()
+    save()
   }
 }
 </script>

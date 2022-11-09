@@ -11,24 +11,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { Project, Stage } from '@/models'
-import { useProjectStore, useStageStore } from '@/stores'
+import { useDocumentStore } from '@/stores'
 import { ProjectStage } from '@/components'
 
-const projectStore = useProjectStore()
-const stageStore = useStageStore()
+const documentStore = useDocumentStore()
+const { stages, projects } = storeToRefs(documentStore)
 
-const { stages } = storeToRefs(stageStore)
-const { projects } = storeToRefs(projectStore)
-
-stageStore.list()
-projectStore.list()
+documentStore.get()
 
 const projectsByStage = (stage: Stage) => {
   return projects.value.filter((p: Project) => p.stage.id === stage.id)
 }
-
-onMounted(() => {})
 </script>

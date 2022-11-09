@@ -1,11 +1,21 @@
 {
   "name": "dockit-api",
   "version": "1.0.0",
-  "description": "track personal projects",
-  "main": "main.js",
+  "description": "",
+  "main": "./src/app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --watch src --ext js",
+    "start": "node ./src/app.js"
   },
-  "author": "Tony S. Tosi",
-  "license": "ISC"
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-fetch": "^3.2.10"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
+  }
 }

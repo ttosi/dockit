@@ -33,6 +33,9 @@ export const useProjectStore = defineStore('project', {
 
       console.log('saving--->', this.project)
     },
+    async updateStage() {
+      console.log(this.project)
+    },
     async delete(id: number) {
       console.log('deleting project with id of', id)
     },

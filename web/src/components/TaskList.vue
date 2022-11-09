@@ -50,10 +50,6 @@
           </tbody>
         </table>
         <div class="flex gap-2 align-middle" @keyup.enter="add()">
-          <!-- <input
-            v-model="task.is_completed"
-            type="checkbox"
-            class="mt-0.5 checkbox checkbox-sm" /> -->
           <input
             ref="refName"
             v-model="task.name"
@@ -87,6 +83,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useDateFormat } from '@vueuse/core'
+import { useDocumentStore } from '@/stores'
 import { Task } from '@/models/Project'
 
 const props = defineProps(['project'])
@@ -95,12 +92,15 @@ const task = ref(new Task())
 
 const refTable = ref()
 const refName = ref()
+const { save } = useDocumentStore()
 
 const add = () => {
+  console.log(task)
   if (!task.value.name) return
 
   tasks.push(task.value)
   task.value = new Task()
+  save()
 
   refName.value.focus()
 }
