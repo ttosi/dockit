@@ -19,10 +19,10 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
-  const response = await network.post("", req.body);
-  console.log(response);
-  res.sendStatus(200);
+  // console.log(req.body);
+  // const response = await network.post("", req.body);
+  // console.log(response);
+  // res.sendStatus(200);
 });
 
 export default router;
