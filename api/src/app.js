@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+  console.log(req.socket.remoteAddress)
   if(req.url === "/auth") {
     next()
   }
