@@ -11,6 +11,10 @@ router.get("/", async (req, res) => {
       },
     },
   });
+  if(document === 401) {
+    res.sendStatus(401)
+    return
+  }
   res.json(document.docs[0]);
 });
 

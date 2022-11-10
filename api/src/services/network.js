@@ -17,8 +17,8 @@ const network = {
     return await fetch(`${this.url}${endpoint}`, {
       headers: this.auth(),
     })
-      .then((res) => res.json())
-      .then((data) => data);
+    .then((res) => res.json())
+    .then((data) => data);
   },
   async post(endpoint, payload) {
     return await fetch(`${this.url}${endpoint}`, {
@@ -32,8 +32,13 @@ const network = {
       },
       body: JSON.stringify(payload),
     })
-      .then((res) => res.json())
-      .then((data) => data);
+    .then((res) => {
+      if(res.status !== 200) {
+        return res.status
+      }
+      return res.json()
+    })
+    .then((data) => data);
   },
   async put() {},
   async delete() {},
