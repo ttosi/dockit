@@ -19,8 +19,6 @@ import { useAuthStore } from '@/stores'
 
 const authStore = useAuthStore()
 const { authenticated } = storeToRefs(authStore)
-console.log(authenticated.value)
-// authStore.authenticate('ttosi519@gmail.com', 'password')
 </script>
 
 <style scoped></style>

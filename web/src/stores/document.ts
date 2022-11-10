@@ -15,7 +15,7 @@ export const useDocumentStore = defineStore('document', {
   },
   actions: {
     async get() {
-      const promise = await fetch('http://127.0.0.1:3000/document')
+      const promise = await fetch('https://tdc.app:3000/document')
       const data = await promise.json()
 
       this._id = data._id
@@ -34,7 +34,7 @@ export const useDocumentStore = defineStore('document', {
     },
     async save() {
       console.log(this.projects)
-      await fetch('http://127.0.0.1:3000/document', {
+      await fetch('https://tdc.app:3000/document', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

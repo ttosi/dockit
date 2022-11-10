@@ -8,6 +8,7 @@
       <new-project-button />
       <project-modal />
       <theme-toggle />
+      <mdicon name="logout" class="mb-1" />
     </div>
   </header>
 </template>
