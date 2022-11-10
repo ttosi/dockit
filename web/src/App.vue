@@ -1,11 +1,8 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-import SiteHeader from '@/components/SiteHeader.vue'
-import SiteFooter from '@/components/SiteFooter.vue'
-</script>
-
 <template>
-  <div class="">
+  <div v-if="!authenticated">
+    <login-screen />
+  </div>
+  <div v-else>
     <site-header />
     <div class="relative overflow-y-auto h-[calc(100vh-110px)] w-screen">
       <router-view />
@@ -13,5 +10,17 @@ import SiteFooter from '@/components/SiteFooter.vue'
     <site-footer />
   </div>
 </template>
+
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { SiteHeader, SiteFooter, LoginScreen } from '@/components/'
+import { useAuthStore } from '@/stores'
+
+const authStore = useAuthStore()
+const { authenticated } = storeToRefs(authStore)
+console.log(authenticated.value)
+// authStore.authenticate('ttosi519@gmail.com', 'password')
+</script>
 
 <style scoped></style>

@@ -1,5 +1,4 @@
-import { useProjectStore } from './project.ts'
-import { useStageStore } from './stage.ts'
+import { useAuthStore } from './auth.ts'
 import { useDocumentStore } from './document.ts'
 
-export { useProjectStore, useStageStore, useDocumentStore }
+export { useAuthStore, useDocumentStore }

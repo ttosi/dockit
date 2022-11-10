@@ -1,6 +1,6 @@
 <template>
   <input type="checkbox" id="project-modal" class="modal-toggle" />
-  <label for="project-modal" class="modal cursor-pointer">
+  <!-- <label for="project-modal" class="modal cursor-pointer">
     <label class="modal-box relative shadow-none">
       <div class="font-normal uppercase text-orange-500 mb-2">
         Add New Project
@@ -28,15 +28,15 @@
         </label>
       </div>
     </label>
-  </label>
+  </label> -->
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useProjectStore } from '@/stores'
+// import { useProjectStore } from '@/stores'
 
 const addNewModal = ref()
-const projectStore = useProjectStore()
+// const projectStore = useProjectStore()
 
 // const saveProject = () => {
 //   projectStore.save()

@@ -51,19 +51,19 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useProjectStore } from '@/stores'
+// import { useProjectStore } from '@/stores'
 
 const props = defineProps(['project'])
-const projectStore = useProjectStore()
+// const projectStore = useProjectStore()
 const addNewModal = ref()
 
 const editProject = () => {
-  projectStore.project = props.project
+  // projectStore.project = props.project
   addNewModal.value.checked = true
 }
 
 const deleteProject = (id: number) => {
-  projectStore.delete(id)
+  // projectStore.delete(id)
 }
 
 onMounted(() => {
