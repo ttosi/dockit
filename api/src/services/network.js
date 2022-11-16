@@ -15,6 +15,7 @@ const network = {
   },
   async get(endpoint) {
     return await fetch(`${this.url}${endpoint}`, {
+      method: "GET",
       headers: this.auth(),
     })
     .then((res) => res.json())
@@ -38,10 +39,22 @@ const network = {
       }
       return res.json()
     })
-    .then((data) => data);
+    .then((data) => {
+      return data
+    });
   },
   async put() {},
   async delete() {},
+  async currentRevison() {
+    const document = await network.post("/_find", {
+      selector: {
+        user: {
+          $eq: "ttosi519@gmail.com",
+        },
+      },
+    });
+    return document.docs[0]._rev
+  }
 };
 
 export { network };

@@ -4,9 +4,9 @@ import { network } from "../services/network.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const document = await network.post("_find", {
+  const document = await network.post("/_find", {
     selector: {
-      user: {
+      email: {
         $eq: "ttosi519@gmail.com",
       },
     },
@@ -15,14 +15,17 @@ router.get("/", async (req, res) => {
     res.sendStatus(401)
     return
   }
+  console.log(document)
   res.json(document.docs[0]);
 });
 
 router.post("/", async (req, res) => {
-  // console.log(req.body);
-  // const response = await network.post("", req.body);
-  // console.log(response);
-  // res.sendStatus(200);
+  await network.post("/", req.body);
+  const response = await network.currentRevison()
+  res.json({
+    status: 200,
+    _rev: response
+  });
 });
 
 export default router;
