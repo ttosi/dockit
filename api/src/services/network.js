@@ -58,7 +58,7 @@ const network = {
   async currentRevision() {
     const document = await network.post("/_find", {
       selector: {
-        user: {
+        email: {
           $eq: "ttosi519@gmail.com",
         },
       },

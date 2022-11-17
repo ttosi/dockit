@@ -8,19 +8,12 @@
       <new-project-button />
       <project-modal />
       <theme-toggle />
-      <mdicon name="logout" class="mb-1 text-orange-500" />
-      <span class="text-orange-500 text-sm mb-1">{{ email }}</span>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { NewProjectButton, ProjectModal, ThemeToggle } from '@/components'
-import { useAuthStore } from '@/stores'
-
-const authStore = useAuthStore()
-const { email } = storeToRefs(authStore)
 </script>
 
 <style scoped></style>

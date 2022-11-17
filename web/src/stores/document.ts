@@ -58,7 +58,7 @@ export const useDocumentStore = defineStore('document', {
           _id: this._id,
           _rev: this._rev,
           type: 'project',
-          user: 'ttosi519@gmail.com',
+          email: 'ttosi519@gmail.com',
           projects: this.projects,
           stages: this.stages,
         }),

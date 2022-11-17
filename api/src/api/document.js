@@ -11,6 +11,7 @@ router.get("/", async (req, res) => {
       },
     },
   });
+  console.log(document);
   res.json(document.docs[0]);
 });
 
