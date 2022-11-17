@@ -14,14 +14,32 @@ const network = {
     });
   },
   async get(endpoint) {
+    // console.log(`GET REQUEST: ${this.url}${endpoint}`);
     return await fetch(`${this.url}${endpoint}`, {
       method: "GET",
       headers: this.auth(),
     })
-    .then((res) => res.json())
-    .then((data) => data);
+      .then((res) => res.json())
+      .then((data) => data);
+  },
+  async put(endpoint, payload) {
+    // console.log(`PUT REQUEST: ${this.url}${endpoint}`);
+    return await fetch(`${this.url}${endpoint}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Basic ${Buffer.from(
+          this.username + ":" + this.password
+        ).toString("base64")}`,
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((data) => data);
   },
   async post(endpoint, payload) {
+    // console.log(`POST REQUEST: ${this.url}${endpoint}`, payload);
     return await fetch(`${this.url}${endpoint}`, {
       method: "POST",
       headers: {
@@ -33,19 +51,11 @@ const network = {
       },
       body: JSON.stringify(payload),
     })
-    .then((res) => {
-      if(res.status !== 200) {
-        return res.status
-      }
-      return res.json()
-    })
-    .then((data) => {
-      return data
-    });
+      .then((res) => res.json())
+      .then((data) => data);
   },
-  async put() {},
   async delete() {},
-  async currentRevison() {
+  async currentRevision() {
     const document = await network.post("/_find", {
       selector: {
         user: {
@@ -53,8 +63,8 @@ const network = {
         },
       },
     });
-    return document.docs[0]._rev
-  }
+    return document.docs[0]._rev;
+  },
 };
 
 export { network };

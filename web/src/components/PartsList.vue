@@ -48,7 +48,7 @@
           </table>
           <div v-else class="my-2 italic">No parts</div>
           <hr class="mb-3 border-base-300" />
-          <div class="flex gap-2 align-middle" @keyup.enter="add()">
+          <div class="flex gap-2 align-middle" @keyup.enter="update()">
             <input
               v-model="part.purchased"
               type="checkbox"
@@ -86,13 +86,7 @@
             <label
               :for="`modal-parts-${project.id}`"
               class="btn btn-sm"
-              @click="part = new Part()">
-              Cancel
-            </label>
-            <label
-              :for="`modal-parts-${project.id}`"
-              class="btn btn-sm"
-              @click="part = new Part()">
+              @click="update()">
               Done
             </label>
           </div>
@@ -104,34 +98,33 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useDocumentStore } from '@/stores'
 import { Part } from '@/models/Project'
 
 const props = defineProps(['project'])
-const parts = props.project.parts
 const part = ref(new Part())
+const { project, set, save } = useDocumentStore()
 
 const refTable = ref()
 const refQuantity = ref()
 
-const add = () => {
+set(props.project)
+
+const update = () => {
   if (!part.value.name) return
-
-  parts.push(part.value)
-  // part.value.save()
-  part.value = new Part()
-
   refQuantity.value.focus()
+
+  project.parts.push(part.value)
+  part.value = new Part()
+  save()
 }
 
 const remove = (part: Part) => {
-  console.log(part)
-}
-
-const print = () => {
-  const printWindow = window.open('')
-  printWindow?.document.write(refTable.value.outerHTML)
-  printWindow?.print()
-  printWindow?.close()
+  if (confirm('Are you sure?')) {
+    project.parts.splice(project.parts.indexOf(part), 1)
+    refQuantity.value.focus()
+    save()
+  }
 }
 
 const formatCurrency = (val: number) => {
@@ -142,17 +135,24 @@ const formatCurrency = (val: number) => {
 }
 
 const total = computed(() => {
-  if (parts.length > 0) {
-    return parts.reduce((a: number, c: Part) => a + c?.cost, 0)
+  if (project.parts.length > 0) {
+    return project.parts.reduce((a: number, c: Part) => a + c?.cost, 0)
   }
   return 0
 })
+
+const print = () => {
+  const printWindow = window.open('')
+  printWindow?.document.write(refTable.value.outerHTML)
+  printWindow?.print()
+  printWindow?.close()
+}
 </script>
 
 <style scoped>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 </style>

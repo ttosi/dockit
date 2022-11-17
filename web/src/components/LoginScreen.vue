@@ -31,17 +31,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 
 const authStore = useAuthStore()
-const { email } = storeToRefs(authStore)
-const password = ref('')
+const { email, token } = storeToRefs(authStore)
+const password = ref('Mak3nna03')
 
-const login = () => {
-  authStore.authenticate(password.value)
+const login = async () => {
+  if (!(await authStore.authenticate(password.value))) {
+    alert('Unable to log in')
+    return
+  }
 }
+
+email.value = 'ttosi519@gmail.com'
+
+onMounted(() => {
+  // if (localStorage.getItem('authenticated')) {
+  //   authStore.authenticated = true
+  // }
+})
 </script>
 
 <style scoped></style>

@@ -3,6 +3,7 @@ import { Stage } from './Stage'
 
 export class Project extends Entity {
   constructor(
+    public id: number = 0,
     public description: string = '',
     public stage = new Stage(),
     public tasks = [] as Task[],

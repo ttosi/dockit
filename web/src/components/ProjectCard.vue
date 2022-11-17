@@ -1,5 +1,5 @@
 <template>
-  <div class="card-body p-0">
+  <div class="card-body p-0" @dblclick="edit()">
     <div
       class="card-title p-2 pb-0 bg-base-300 text-sm font-semibold uppercase flex justify-between">
       {{ props.project.name }}
@@ -8,12 +8,12 @@
           name="pencil-outline"
           size="16"
           class="hover:text-slate-100"
-          @click="editProject" />
+          @click="edit()" />
         <mdicon
           name="close-box-outline"
           size="16"
           class="hover:text-slate-100"
-          @click="deleteProject(props.project.id)" />
+          @click="removeProject(project)" />
       </div>
     </div>
     <div class="px-2 font-light">
@@ -28,8 +28,13 @@
           <label
             :for="`modal-task-${props.project.id}`"
             class="cursor-pointer hover:text-slate-100">
-            <span class="indicator-item p-1 py-1.5 badge badge-accent badge-xs">
-              {{ props.project.tasks.length }}
+            <span
+              class="indicator-item p-1 py-1.5 badge badge-accent badge-xs flex">
+              <span>
+                {{ props.project.tasks.filter((t: any) => t.completed).length }}
+              </span>
+              /
+              <span>{{ props.project.tasks.length }}</span>
             </span>
             <mdicon name="file-tree" />
           </label>
@@ -51,19 +56,22 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-// import { useProjectStore } from '@/stores'
+import { useDocumentStore } from '@/stores'
+import type { Project } from '@/models'
 
 const props = defineProps(['project'])
-// const projectStore = useProjectStore()
+const { set, remove } = useDocumentStore()
 const addNewModal = ref()
 
-const editProject = () => {
-  // projectStore.project = props.project
+const edit = () => {
+  set(props.project)
   addNewModal.value.checked = true
 }
 
-const deleteProject = (id: number) => {
-  // projectStore.delete(id)
+const removeProject = (project: Project) => {
+  if (confirm(`Delete ${project.name} project?`)) {
+    remove(project)
+  }
 }
 
 onMounted(() => {

@@ -17,18 +17,19 @@
           style="width: 100%"
           class="table table-compact w-full mt-2">
           <tbody>
-            <tr v-for="task in project.tasks" :key="task">
+            <tr
+              v-for="task in project.tasks"
+              :style="task.completed ? 'text-decoration: line-through' : ''"
+              :key="task">
               <td>
                 <input
-                  v-model="task.is_completed"
+                  v-model="task.completed"
                   type="checkbox"
-                  class="checkbox checkbox-sm mt-1" />
+                  class="checkbox checkbox-sm mt-1"
+                  @change="save()" />
               </td>
               <td class="w-full">
-                <div
-                  :style="
-                    task.is_completed ? 'text-decoration: line-through' : ''
-                  ">
+                <div>
                   {{ task.name }}
                 </div>
               </td>
@@ -49,7 +50,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="flex gap-2 align-middle" @keyup.enter="add()">
+        <div class="flex gap-2 align-middle" @keyup.enter="update()">
           <input
             ref="refName"
             v-model="task.name"
@@ -65,13 +66,10 @@
           </button>
         </div>
         <div class="flex gap-2">
-          <label :for="`modal-task-${project.id}`" class="btn btn-sm btn-ghost">
-            Cancel
-          </label>
           <label
             :for="`modal-task-${project.id}`"
             class="btn btn-sm"
-            @click="add()">
+            @click="update()">
             Done
           </label>
         </div>
@@ -87,26 +85,29 @@ import { useDocumentStore } from '@/stores'
 import { Task } from '@/models/Project'
 
 const props = defineProps(['project'])
-const tasks = props.project.tasks
 const task = ref(new Task())
+const { project, set, save } = useDocumentStore()
 
 const refTable = ref()
 const refName = ref()
-const { save } = useDocumentStore()
 
-const add = () => {
-  console.log(task)
+set(props.project)
+
+const update = () => {
   if (!task.value.name) return
+  refName.value.focus()
 
-  tasks.push(task.value)
+  project.tasks.push(task.value)
   task.value = new Task()
   save()
-
-  refName.value.focus()
 }
 
 const remove = (task: Task) => {
-  console.log(task)
+  if (confirm('Are you sure?')) {
+    project.tasks.splice(project.tasks.indexOf(task), 1)
+    refName.value.focus()
+    save()
+  }
 }
 
 const print = () => {

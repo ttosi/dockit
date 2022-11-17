@@ -5,7 +5,7 @@
         v-for="stage in stages"
         :stage="stage"
         :projects="projectsByStage(stage)"
-        :key="stage.id" />
+        :key="stage.name" />
     </div>
   </main>
 </template>
@@ -22,6 +22,8 @@ const { stages, projects } = storeToRefs(documentStore)
 documentStore.get()
 
 const projectsByStage = (stage: Stage) => {
-  return projects.value.filter((p: Project) => p.stage.id === stage.id)
+  return projects.value.filter(
+    (p: Project) => JSON.stringify(p.stage) == JSON.stringify(stage)
+  )
 }
 </script>

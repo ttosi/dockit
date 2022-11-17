@@ -11,21 +11,20 @@ router.get("/", async (req, res) => {
       },
     },
   });
-  if(document === 401) {
-    res.sendStatus(401)
-    return
-  }
-  console.log(document)
   res.json(document.docs[0]);
 });
 
 router.post("/", async (req, res) => {
   await network.post("/", req.body);
-  const response = await network.currentRevison()
+  const response = await network.currentRevision();
   res.json({
     status: 200,
-    _rev: response
+    _rev: response,
   });
+});
+
+router.put("/", async (req, res) => {
+  res.sendStatus(501);
 });
 
 export default router;

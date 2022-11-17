@@ -16,20 +16,20 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import { useMagicKeys } from '@vueuse/core'
-// import { useProjectStore } from '@/stores'
+import { useDocumentStore } from '@/stores'
 import { Project } from '@/models/Project'
 
-// const projectStore = useProjectStore()
+const { set } = useDocumentStore()
 const addNewModal = ref()
 const keys = useMagicKeys()
-const addProject = keys['Ctrl+Shift+Z']
+const addProjectKeys = keys['Ctrl+Shift+Z']
 
 const addNewProject = () => {
-  // projectStore.project = new Project()
+  set(new Project())
   addNewModal.value.checked = true
 }
 
-watch(addProject, (v) => {
+watch(addProjectKeys, (v) => {
   if (v) {
     addNewProject()
   }
