@@ -4,8 +4,8 @@
       {{ stage.name }}
     </div>
     <div class="border border-t-0 p-1 border-orange-500">
-      <span v-for="project in projects" :key="project">
-        <task-list :project="project" />
+      <span v-for="project in projects" :key="project.id">
+        <task-list :project="project.id" />
         <parts-list :project="project" />
       </span>
       <draggable

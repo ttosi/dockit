@@ -19,7 +19,7 @@ import { ProjectStage } from '@/components'
 const documentStore = useDocumentStore()
 const { stages, projects } = storeToRefs(documentStore)
 
-documentStore.get()
+documentStore.list()
 
 const projectsByStage = (stage: Stage) => {
   return projects.value.filter(

@@ -84,14 +84,16 @@ import { useDateFormat } from '@vueuse/core'
 import { useDocumentStore } from '@/stores'
 import { Task } from '@/models/Project'
 
-const props = defineProps(['project'])
+const props = defineProps(['projectId'])
 const task = ref(new Task())
-const { project, set, save } = useDocumentStore()
+const { projects, set, save } = useDocumentStore()
 
+console.log(projects[props.projectId])
+console.log('iiiiiiiiiii', props.projectId)
 const refTable = ref()
 const refName = ref()
 
-set(props.project)
+// set(props.project)
 
 const update = () => {
   if (!task.value.name) return

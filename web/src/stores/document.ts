@@ -6,8 +6,7 @@ import { getObjectsFromJson } from '@/services/utilService'
 export const useDocumentStore = defineStore('document', {
   state: () => {
     return {
-      _id: undefined,
-      _rev: undefined,
+      _id: null,
       email: '',
       project: new Project(),
       editingProject: new Project(),
@@ -20,21 +19,19 @@ export const useDocumentStore = defineStore('document', {
       this.project = { ...project } as Project
       this.editingProject = project
     },
-    async get() {
+    async list() {
       const promise = await fetch('http://localhost:3000/document')
       const data = await promise.json()
-
       this._id = data._id
-      this._rev = data._rev
       this.email = 'ttosi519@gmail.com'
       this.stages = getObjectsFromJson(Stage, data.stages as Stage[])
       this.projects = getObjectsFromJson(
         Project,
         data.projects as Project[]
       ).map((project) => {
+        project.stage = new Stage().create(project.stage)
         project.parts = getObjectsFromJson(Part, project.parts as Part[])
         project.tasks = getObjectsFromJson(Task, project.tasks as Task[])
-        project.stage = new Stage().create(project.stage)
         return project
       })
     },
@@ -56,7 +53,6 @@ export const useDocumentStore = defineStore('document', {
         },
         body: JSON.stringify({
           _id: this._id,
-          _rev: this._rev,
           type: 'project',
           email: 'ttosi519@gmail.com',
           projects: this.projects,
@@ -64,7 +60,7 @@ export const useDocumentStore = defineStore('document', {
         }),
       })
         .then((data: any) => data.json())
-        .then((res: any) => (this._rev = res._rev))
+        .then((res: any) => res)
     },
     async remove(project: any) {
       this.projects.splice(this.projects.indexOf(project), 1)
@@ -77,14 +73,13 @@ export const useDocumentStore = defineStore('document', {
         },
         body: JSON.stringify({
           _id: this._id,
-          _rev: this._rev,
           email: 'ttosi519@gmail.com',
           projects: this.projects,
           stages: this.stages,
         }),
       })
         .then((data: any) => data.json())
-        .then((res: any) => (this._rev = res._rev))
+        .then((res: any) => res)
     },
   },
 })

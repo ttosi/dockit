@@ -8,7 +8,7 @@ export class Project extends Entity {
     public stage = new Stage(),
     public tasks = [] as Task[],
     public parts = [] as Part[],
-    public completed: boolean = false
+    public completed = false
   ) {
     super()
   }
@@ -26,7 +26,7 @@ export class Part extends Entity {
 }
 
 export class Task extends Entity {
-  constructor(public completed: boolean = false) {
+  constructor(public completed = false) {
     super()
   }
 }

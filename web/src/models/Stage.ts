@@ -1,7 +1,7 @@
 import { Entity } from './Entity'
 
 export class Stage extends Entity {
-  constructor() {
+  constructor(public shortname: string = '') {
     super()
   }
 }
