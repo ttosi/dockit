@@ -12,13 +12,22 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useCookies } from 'vue3-cookies'
 import { LoginScreen, SiteHeader, SiteFooter } from '@/components/'
 import { useAuthStore } from '@/stores/'
-import { storeToRefs } from 'pinia'
 
+const { cookies } = useCookies()
 const authStore = useAuthStore()
 const { authenticated } = storeToRefs(authStore)
+
+onMounted(() => {
+  if (cookies.get('token') && cookies.get('user')) {
+    authenticated.value = true
+  }
+})
 </script>
 
 <style scoped></style>

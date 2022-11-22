@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useAuthStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 
@@ -40,16 +40,13 @@ const { email } = storeToRefs(authStore)
 const password = ref('')
 
 const login = async () => {
-  console.log('Sdsdf')
   if (!(await authStore.authenticate(password.value))) {
-    alert('Unable to log in')
+    alert('Unable to login')
     return
   }
 }
 
 email.value = 'ttosi519@gmail.com'
-
-onMounted(() => {})
 </script>
 
 <style scoped></style>

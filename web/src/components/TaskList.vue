@@ -1,21 +1,22 @@
 <template>
-  <input type="checkbox" :id="`modal-task-${projectId}`" class="modal-toggle" />
+  <input type="checkbox" :id="`modal-task-${props.id}`" class="modal-toggle" />
   <div class="modal">
     <div class="modal-box cursor-default">
       <div class="flex justify-between">
         <h3 class="text-sm font-semibold uppercase mb-2">
-          <!-- Task List - {{ project.name }} -->
+          Task List - {{ project.name }}
         </h3>
       </div>
       <hr />
       <div>
         <table
+          v-if="project.tasks.length > 0"
           ref="refTable"
           style="width: 100%"
           class="table table-compact w-full mt-2">
           <tbody>
             <tr
-              v-for="task in projects.tasks"
+              v-for="task in project.tasks"
               :style="task.completed ? 'text-decoration: line-through' : ''"
               :key="task">
               <td>
@@ -23,7 +24,7 @@
                   v-model="task.completed"
                   type="checkbox"
                   class="checkbox checkbox-sm mt-1"
-                  @change="save()" />
+                  @change="set(project), save()" />
               </td>
               <td class="w-full">
                 <div>
@@ -47,6 +48,7 @@
             </tr>
           </tbody>
         </table>
+        <div v-else class="my-2 italic">No tasks</div>
         <div class="flex gap-2 align-middle" @keyup.enter="update()">
           <input
             ref="refName"
@@ -64,7 +66,7 @@
         </div>
         <div class="flex gap-2">
           <label
-            :for="`modal-task-${projectId}`"
+            :for="`modal-task-${props.id}`"
             class="btn btn-sm"
             @click="update()">
             Done
@@ -79,33 +81,34 @@
 import { ref } from 'vue'
 import { useDateFormat } from '@vueuse/core'
 import { useDocumentStore } from '@/stores'
-import { Task } from '@/models/Project'
+import { Project, Task } from '@/models/Project'
 
-const props = defineProps(['projectId'])
+const props = defineProps(['id'])
 const task = ref(new Task())
 const { projects, set, save } = useDocumentStore()
 
-console.log(projects[props.projectId])
-console.log('iiiiiiiiiii', props.projectId)
+const project = projects.find((p: Project) => p.id === props.id)
 const refTable = ref()
 const refName = ref()
 
-// set(props.project)
-
 const update = () => {
   if (!task.value.name) return
-  refName.value.focus()
 
-  projects.tasks.push(task.value)
-  task.value = new Task()
+  project.tasks.push(task.value)
+  set(project)
   save()
+
+  task.value = new Task()
+  refName.value.focus()
 }
 
 const remove = (task: Task) => {
   if (confirm('Are you sure?')) {
-    projects.tasks.splice(projects.tasks.indexOf(task), 1)
-    refName.value.focus()
+    project.tasks.splice(project.tasks.indexOf(task), 1)
+    set(project)
     save()
+
+    refName.value.focus()
   }
 }
 

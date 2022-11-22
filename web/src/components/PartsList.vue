@@ -1,9 +1,6 @@
 <template>
   <div>
-    <input
-      type="checkbox"
-      :id="`modal-parts-${project.id}`"
-      class="modal-toggle" />
+    <input type="checkbox" :id="`modal-parts-${id}`" class="modal-toggle" />
     <div class="modal m-3">
       <div class="modal-box cursor-default">
         <div class="flex justify-between">
@@ -84,7 +81,7 @@
           </div>
           <div class="flex gap-2">
             <label
-              :for="`modal-parts-${project.id}`"
+              :for="`modal-parts-${id}`"
               class="btn btn-sm"
               @click="update()">
               Done
@@ -99,31 +96,34 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useDocumentStore } from '@/stores'
-import { Part } from '@/models/Project'
+import { Part, Project } from '@/models/Project'
 
-const props = defineProps(['project'])
+const props = defineProps(['id'])
 const part = ref(new Part())
-const { project, set, save } = useDocumentStore()
+const { projects, set, save } = useDocumentStore()
 
+const project = projects.find((p: Project) => p.id === props.id)
 const refTable = ref()
 const refQuantity = ref()
 
-set(props.project)
-
 const update = () => {
   if (!part.value.name) return
-  refQuantity.value.focus()
 
   project.parts.push(part.value)
-  part.value = new Part()
+  set(project)
   save()
+
+  part.value = new Part()
+  refQuantity.value.focus()
 }
 
 const remove = (part: Part) => {
   if (confirm('Are you sure?')) {
     project.parts.splice(project.parts.indexOf(part), 1)
-    refQuantity.value.focus()
+    set(project)
     save()
+
+    refQuantity.value.focus()
   }
 }
 

@@ -30,6 +30,7 @@ const networkService = {
       .then((res) => res.json())
       .then((data) => data)
   },
+  async delete() {},
 }
 
 export { networkService }

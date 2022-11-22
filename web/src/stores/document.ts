@@ -24,9 +24,6 @@ export const useDocumentStore = defineStore('document', {
     async list() {
       const data = await networkService.get('/document')
 
-      // console.log(data)
-      // console.log(email)
-
       this.stages = getObjectsFromJson(Stage, data.stages as Stage[])
       this.projects = getObjectsFromJson(
         Project,
@@ -48,45 +45,13 @@ export const useDocumentStore = defineStore('document', {
         this.projects.push(this.project)
       }
 
-      console.log(this.projects)
-      console.log(this.stages)
-
       await networkService.post('/document', {
-        email: cookies.get('user'),
         projects: this.projects,
         stages: this.stages,
       })
-
-      // await fetch('http://localhost:3000/document', {
-      //   method: 'POST',
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     projects: this.projects,
-      //     stages: this.stages,
-      //   }),
-      // })
-      //   .then((data: any) => data.json())
-      //   .then((res: any) => res)
     },
-    async remove(project: any) {
+    async delete(project: any) {
       this.projects.splice(this.projects.indexOf(project), 1)
-
-      await fetch('http://localhost:3000/document', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          projects: this.projects,
-          stages: this.stages,
-        }),
-      })
-        .then((data: any) => data.json())
-        .then((res: any) => res)
     },
   },
 })

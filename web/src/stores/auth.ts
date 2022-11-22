@@ -13,7 +13,6 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     async authenticate(password: string) {
-      console.log(password)
       const auth = await networkService.post('/auth', {
         email: this.email,
         password: password,

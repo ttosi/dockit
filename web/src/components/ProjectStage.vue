@@ -5,8 +5,8 @@
     </div>
     <div class="border border-t-0 p-1 border-orange-500">
       <span v-for="project in projects" :key="project.id">
-        <task-list :project="project.id" />
-        <parts-list :project="project" />
+        <task-list :id="project.id" />
+        <parts-list :id="project.id" />
       </span>
       <draggable
         :list="projects"
