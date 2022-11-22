@@ -2,12 +2,15 @@ import { useCookies } from 'vue3-cookies'
 const { cookies } = useCookies()
 
 const networkService = {
-  url: 'http://localhost:3000',
+  url: import.meta.env.VITE_BASE_URL,
+  token: cookies.get('token'),
+  user: cookies.get('user'),
   headers() {
     return {
-      'X-API-Key': cookies.get('token'),
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      'X-Auth-Token': this.token,
+      'X-Auth-User': this.user,
     }
   },
   async get(endpoint: string) {
@@ -19,9 +22,7 @@ const networkService = {
       .then((data) => data)
   },
   async post(endpoint: string, payload: object) {
-    console.log(`${this.url}${endpoint}`)
-    console.log(payload)
-    return await fetch(`${this.url}${endpoint}`, {
+    return fetch(`${this.url}${endpoint}`, {
       method: 'POST',
       headers: this.headers(),
       body: JSON.stringify(payload),

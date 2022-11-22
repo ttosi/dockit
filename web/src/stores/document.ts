@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
+import { useCookies } from 'vue3-cookies'
 import { Stage } from '@/models/Stage'
 import { Project, Part, Task } from '@/models/Project'
 import { getObjectsFromJson } from '@/services/utilService'
+import { networkService } from '@/services/networkService'
+
+const { cookies } = useCookies()
 
 export const useDocumentStore = defineStore('document', {
   state: () => {
     return {
-      _id: null,
-      email: '',
       project: new Project(),
       editingProject: new Project(),
       projects: [] as Project[],
@@ -20,10 +22,11 @@ export const useDocumentStore = defineStore('document', {
       this.editingProject = project
     },
     async list() {
-      const promise = await fetch('http://localhost:3000/document')
-      const data = await promise.json()
-      this._id = data._id
-      this.email = 'ttosi519@gmail.com'
+      const data = await networkService.get('/document')
+
+      // console.log(data)
+      // console.log(email)
+
       this.stages = getObjectsFromJson(Stage, data.stages as Stage[])
       this.projects = getObjectsFromJson(
         Project,
@@ -45,22 +48,28 @@ export const useDocumentStore = defineStore('document', {
         this.projects.push(this.project)
       }
 
-      await fetch('http://localhost:3000/document', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          _id: this._id,
-          type: 'project',
-          email: 'ttosi519@gmail.com',
-          projects: this.projects,
-          stages: this.stages,
-        }),
+      console.log(this.projects)
+      console.log(this.stages)
+
+      await networkService.post('/document', {
+        email: cookies.get('user'),
+        projects: this.projects,
+        stages: this.stages,
       })
-        .then((data: any) => data.json())
-        .then((res: any) => res)
+
+      // await fetch('http://localhost:3000/document', {
+      //   method: 'POST',
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     projects: this.projects,
+      //     stages: this.stages,
+      //   }),
+      // })
+      //   .then((data: any) => data.json())
+      //   .then((res: any) => res)
     },
     async remove(project: any) {
       this.projects.splice(this.projects.indexOf(project), 1)
@@ -72,8 +81,6 @@ export const useDocumentStore = defineStore('document', {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          _id: this._id,
-          email: 'ttosi519@gmail.com',
           projects: this.projects,
           stages: this.stages,
         }),

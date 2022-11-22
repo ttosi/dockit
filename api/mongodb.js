@@ -3,27 +3,26 @@ import { MongoClient } from "mongodb";
 // import { MongoClient } from 'mongodb'
 
 // Connection URL
-const url = "mongodb://tdc.app:27017";
+const url = "mongodb://dockit_rw:Mak1nt0%24h@tdc.app:27017/?authSource=dockit";
 const client = new MongoClient(url);
-
-// Database Name
 const dbName = "dockit";
 
 async function main() {
-  // Use connect method to connect to the server
   await client.connect();
   console.log("Connected successfully to server");
+
   const db = client.db(dbName);
   const collection = db.collection("projects");
 
-  // the following code examples can be pasted here...
-  const insert = await collection.insertOne(seedData);
-  console.log(insert);
+  // const insert = await collection.insertOne(seedData);
+  // console.log(insert);
 
   const find = await collection.find({}).toArray();
   console.log(find);
 
-  // const del = await collection.deleteMany({ email: "ttosi519@gmail.com" });
+  // const del = await collection.deleteMany(
+  //    { email: "ttosi519@gmail.com" }
+  // );
 
   // const update = await collection.updateOne(
   //   { user: "ttosi519@gmail.com" },
@@ -35,9 +34,6 @@ async function main() {
   //   { user: "ttosi519@gmail.com" },
   //   { $unset: { test: 1 } }
   // );
-
-  // const find = await collection.find({}).toArray();
-  // console.log(find);
 
   return "done.";
 }

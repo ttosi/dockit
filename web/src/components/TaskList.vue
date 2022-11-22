@@ -1,13 +1,10 @@
 <template>
-  <input
-    type="checkbox"
-    :id="`modal-task-${project.id}`"
-    class="modal-toggle" />
+  <input type="checkbox" :id="`modal-task-${projectId}`" class="modal-toggle" />
   <div class="modal">
     <div class="modal-box cursor-default">
       <div class="flex justify-between">
         <h3 class="text-sm font-semibold uppercase mb-2">
-          Task List - {{ project.name }}
+          <!-- Task List - {{ project.name }} -->
         </h3>
       </div>
       <hr />
@@ -18,7 +15,7 @@
           class="table table-compact w-full mt-2">
           <tbody>
             <tr
-              v-for="task in project.tasks"
+              v-for="task in projects.tasks"
               :style="task.completed ? 'text-decoration: line-through' : ''"
               :key="task">
               <td>
@@ -67,7 +64,7 @@
         </div>
         <div class="flex gap-2">
           <label
-            :for="`modal-task-${project.id}`"
+            :for="`modal-task-${projectId}`"
             class="btn btn-sm"
             @click="update()">
             Done
@@ -99,14 +96,14 @@ const update = () => {
   if (!task.value.name) return
   refName.value.focus()
 
-  project.tasks.push(task.value)
+  projects.tasks.push(task.value)
   task.value = new Task()
   save()
 }
 
 const remove = (task: Task) => {
   if (confirm('Are you sure?')) {
-    project.tasks.splice(project.tasks.indexOf(task), 1)
+    projects.tasks.splice(projects.tasks.indexOf(task), 1)
     refName.value.focus()
     save()
   }
