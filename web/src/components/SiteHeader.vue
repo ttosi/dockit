@@ -4,11 +4,16 @@
       <mdicon name="view-list" class="pt-0.5" />
       <span class="text-xl font-semibold">Dockit</span>
     </div>
-    <div class="flex justify-between items-center gap-5">
-      <new-project-button />
+    <div class="flex justify-between items-center gap-2">
+      <new-project-button class="mr-1" />
       <project-modal />
       <theme-toggle />
-      <mdicon name="logout" class="mb-1 text-orange-500" />
+      <mdicon name="cog-outline" size="20" class="mb-1 text-orange-500" />
+      <mdicon
+        name="logout"
+        size="20"
+        class="mb-1 text-orange-500"
+        @click="authStore.logout()" />
       <span class="text-orange-500 text-sm mb-1">{{ email }}</span>
     </div>
   </header>

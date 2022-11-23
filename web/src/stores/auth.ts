@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useCookies } from 'vue3-cookies'
 import { networkService } from '@/services/networkService'
+
 const { cookies } = useCookies()
 
 export const useAuthStore = defineStore('auth', {
@@ -12,7 +13,8 @@ export const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
-    async authenticate(password: string) {
+    async login(password: string) {
+      console.log('nn', this.email)
       const auth = await networkService.post('/auth', {
         email: this.email,
         password: password,
@@ -31,6 +33,13 @@ export const useAuthStore = defineStore('auth', {
 
       return true
     },
-    async logout() {},
+    async logout() {
+      cookies.remove('token')
+      cookies.remove('user')
+
+      this.authenticated = false
+      this.token = ''
+      this.email = ''
+    },
   },
 })

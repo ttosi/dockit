@@ -40,7 +40,7 @@ const { email } = storeToRefs(authStore)
 const password = ref('')
 
 const login = async () => {
-  if (!(await authStore.authenticate(password.value))) {
+  if (!(await authStore.login(password.value))) {
     alert('Unable to login')
     return
   }

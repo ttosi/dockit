@@ -19,7 +19,10 @@
             style="width: 100%"
             class="table table-compact w-full mt-2">
             <tbody>
-              <tr v-for="part in project.parts" :key="part">
+              <tr
+                v-for="part in project.parts"
+                :key="part"
+                :style="part.purchased ? 'text-decoration: line-through' : ''">
                 <td>
                   <input
                     v-model="part.purchased"
@@ -28,10 +31,7 @@
                 </td>
                 <td>{{ part.quantity }}x</td>
                 <td>
-                  <div
-                    :style="
-                      part.purchased ? 'text-decoration: line-through' : ''
-                    ">
+                  <div>
                     {{ part.name }}
                   </div>
                 </td>

@@ -1,11 +1,8 @@
 import { defineStore } from 'pinia'
-import { useCookies } from 'vue3-cookies'
 import { Stage } from '@/models/Stage'
 import { Project, Part, Task } from '@/models/Project'
 import { getObjectsFromJson } from '@/services/utilService'
 import { networkService } from '@/services/networkService'
-
-const { cookies } = useCookies()
 
 export const useDocumentStore = defineStore('document', {
   state: () => {
@@ -44,14 +41,17 @@ export const useDocumentStore = defineStore('document', {
         this.project.stage = this.stages[0]
         this.projects.push(this.project)
       }
-
+      await this.update()
+    },
+    async remove(project: any) {
+      this.projects.splice(this.projects.indexOf(project), 1)
+      await this.update()
+    },
+    async update() {
       await networkService.post('/document', {
         projects: this.projects,
         stages: this.stages,
       })
-    },
-    async delete(project: any) {
-      this.projects.splice(this.projects.indexOf(project), 1)
     },
   },
 })

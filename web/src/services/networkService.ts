@@ -1,16 +1,15 @@
 import { useCookies } from 'vue3-cookies'
+
 const { cookies } = useCookies()
 
 const networkService = {
   url: import.meta.env.VITE_BASE_URL,
-  token: cookies.get('token'),
-  user: cookies.get('user'),
   headers() {
     return {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'X-Auth-Token': this.token,
-      'X-Auth-User': this.user,
+      'X-Auth-Token': cookies.get('token'),
+      'X-Auth-User': cookies.get('user'),
     }
   },
   async get(endpoint: string) {

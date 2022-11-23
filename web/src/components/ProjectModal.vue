@@ -1,6 +1,9 @@
 <template>
   <input type="checkbox" id="project-modal" class="modal-toggle" />
-  <label for="project-modal" class="modal cursor-pointer">
+  <label
+    for="project-modal"
+    class="modal cursor-pointer"
+    @keyup.enter="update()">
     <label class="modal-box relative shadow-none">
       <div class="font-normal uppercase text-orange-500 mb-2">
         Add New Project
@@ -13,22 +16,19 @@
           class="input input-bordered w-full border-orange-500 mb-3 text-sm" />
       </div>
       <div>
-        <textarea
+        <input
           v-model.lazy="editingProject.description"
-          class="textarea border border-orange-500 w-full resize-none"
-          placeholder="Description"></textarea>
+          class="input input-bordered border-orange-500 w-full resize-none"
+          placeholder="Description" />
       </div>
-      <div class="flex gap-2 justify-end mt-1">
+      <div class="flex gap-2 justify-end mt-3">
         <label
           for="project-modal"
           class="btn btn-sm"
           @click="Object.assign(editingProject, project)">
           Cancel
         </label>
-        <label
-          for="project-modal"
-          class="btn btn-sm"
-          @click="save(Object.assign(project, editingProject))">
+        <label for="project-modal" class="btn btn-sm" @click="update()">
           Save
         </label>
       </div>
@@ -46,6 +46,11 @@ const documentStore = useDocumentStore()
 const { save } = useDocumentStore()
 const { project, editingProject } = storeToRefs(documentStore)
 
+const update = async () => {
+  await save(Object.assign(project, editingProject))
+  addNewModal.value.checked = false
+}
+
 onMounted(() => {
   addNewModal.value = document.getElementById(
     'project-modal'
@@ -53,8 +58,4 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
-.active {
-  @apply bg-orange-500 text-white border-none;
-}
-</style>
+<style scoped></style>

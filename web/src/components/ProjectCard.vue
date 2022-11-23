@@ -29,7 +29,7 @@
             :for="`modal-task-${props.project.id}`"
             class="cursor-pointer hover:text-slate-100">
             <span
-              class="indicator-item p-1 py-1.5 badge badge-accent badge-xs flex">
+              class="indicator-item px-1.5 py-2 badge bg-gray-600 text-white badge-xs flex">
               <span>
                 {{ props.project.tasks.filter((t: any) => t.completed).length }}
               </span>
@@ -43,7 +43,8 @@
           <label
             :for="`modal-parts-${props.project.id}`"
             class="cursor-pointer hover:text-slate-100">
-            <span class="indicator-item p-1 py-1.5 badge badge-accent badge-xs">
+            <span
+              class="indicator-item px-1.5 py-2 badge bg-gray-600 text-white badge-xs">
               {{ props.project.parts.length }}
             </span>
             <mdicon name="cart" />

@@ -1,7 +1,7 @@
 <template>
   <input type="checkbox" :id="`modal-task-${props.id}`" class="modal-toggle" />
   <div class="modal">
-    <div class="modal-box cursor-default">
+    <div class="modal-box cursor-default w-2/3 max-w-5xl">
       <div class="flex justify-between">
         <h3 class="text-sm font-semibold uppercase mb-2">
           Task List - {{ project.name }}
@@ -26,13 +26,13 @@
                   class="checkbox checkbox-sm mt-1"
                   @change="set(project), save()" />
               </td>
-              <td class="w-full">
-                <div>
-                  {{ task.name }}
-                </div>
-              </td>
-              <td>{{ useDateFormat(task.created, 'M/D/YYYY').value }}</td>
               <td>
+                {{ task.name }}
+              </td>
+              <td class="grid text-right align-middle">
+                {{ useDateFormat(task.created, 'M/D/YYYY').value }}
+              </td>
+              <td class="text-right">
                 {{
                   task.completed
                     ? useDateFormat(task.completed, 'M/D/YYYY').value
@@ -49,12 +49,12 @@
           </tbody>
         </table>
         <div v-else class="my-2 italic">No tasks</div>
-        <div class="flex gap-2 align-middle" @keyup.enter="update()">
+        <div class="flex gap-2 align-middle" @keyup.enter="add()">
           <input
             ref="refName"
             v-model="task.name"
             type="text"
-            class="w-full input input-bordered input-xs"
+            class="w-full input input-bordered input-sm p-4"
             placeholder="Task" />
         </div>
       </div>
@@ -68,7 +68,7 @@
           <label
             :for="`modal-task-${props.id}`"
             class="btn btn-sm"
-            @click="update()">
+            @click="add()">
             Done
           </label>
         </div>
@@ -85,29 +85,26 @@ import { Project, Task } from '@/models/Project'
 
 const props = defineProps(['id'])
 const task = ref(new Task())
-const { projects, set, save } = useDocumentStore()
+const { projects, set, save, update } = useDocumentStore()
 
 const project = projects.find((p: Project) => p.id === props.id)
 const refTable = ref()
 const refName = ref()
 
-const update = () => {
+const add = async () => {
   if (!task.value.name) return
 
   project.tasks.push(task.value)
-  set(project)
-  save()
-
+  await update()
   task.value = new Task()
+
   refName.value.focus()
 }
 
-const remove = (task: Task) => {
+const remove = async (task: Task) => {
   if (confirm('Are you sure?')) {
     project.tasks.splice(project.tasks.indexOf(task), 1)
-    set(project)
-    save()
-
+    await update()
     refName.value.focus()
   }
 }
