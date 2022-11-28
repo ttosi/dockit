@@ -37,6 +37,9 @@
                 </td>
                 <td>{{ part.source }}</td>
                 <td>{{ formatCurrency(part.cost) }}</td>
+                <td class="cursor-pointer" @click="edit(part)">
+                  <mdicon name="pencil" size="16" />
+                </td>
                 <td class="cursor-pointer" @click="remove(part)">
                   <mdicon name="trash-can" size="16" />
                 </td>
@@ -115,6 +118,10 @@ const update = () => {
 
   part.value = new Part()
   refQuantity.value.focus()
+}
+
+const edit = (p: Part) => {
+  part.value = project.parts.splice(project.parts.indexOf(p), 1)[0]
 }
 
 const remove = (part: Part) => {

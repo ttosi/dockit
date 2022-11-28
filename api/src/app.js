@@ -15,6 +15,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(express.static("dist"));
 
 database.connect();
 
@@ -34,8 +35,6 @@ app.use(async (req, res, next) => {
     next();
     return;
   }
-
-  // console.log("uuu", req.headers["x-auth-user"]);
 
   const user = await database.find("users", {
     email: req.headers["x-auth-user"],

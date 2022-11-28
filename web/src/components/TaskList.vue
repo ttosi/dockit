@@ -39,6 +39,9 @@
                     : ''
                 }}
               </td>
+              <td class="cursor-pointer" @click="edit(task)">
+                <mdicon name="pencil" size="16" />
+              </td>
               <td class="cursor-pointer" @click="remove(task)">
                 <mdicon name="trash-can" size="16" />
               </td>
@@ -99,6 +102,10 @@ const add = async () => {
   task.value = new Task()
 
   refName.value.focus()
+}
+
+const edit = (t: Task) => {
+  task.value = project.tasks.splice(project.tasks.indexOf(t), 1)[0]
 }
 
 const remove = async (task: Task) => {
