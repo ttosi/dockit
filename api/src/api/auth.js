@@ -1,8 +1,6 @@
 import express from "express";
-import { MongoClient } from "mongodb";
 import bcrypt from "bcrypt-nodejs";
 import { v4 as uuidv4 } from "uuid";
-import { network } from "../services/network.js";
 import { database } from "../services/database.js";
 
 const router = express.Router();

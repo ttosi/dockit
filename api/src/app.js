@@ -1,6 +1,4 @@
-import https from "https";
 import http from "http";
-import fs from "fs";
 import express from "express";
 import { database } from "./services/database.js";
 import bodyParser from "express";
@@ -58,5 +56,5 @@ app.use("/document", document);
 app.use("/auth", auth);
 
 http.createServer(app).listen(port, () => {
-  console.log(`listening locally on port ${port}`);
+  console.log(`listening on port ${port}`);
 });
