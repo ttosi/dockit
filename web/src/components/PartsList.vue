@@ -2,7 +2,7 @@
   <div>
     <input type="checkbox" :id="`modal-parts-${id}`" class="modal-toggle" />
     <div class="modal m-3">
-      <div class="modal-box cursor-default">
+      <div class="modal-box cursor-default w-2/5 max-w-5xl">
         <div class="flex justify-between">
           <h3 class="text-sm font-semibold uppercase mb-2">
             Parts List - {{ project.name }}
@@ -20,8 +20,8 @@
             class="table table-compact w-full mt-2">
             <tbody>
               <tr
-                v-for="part in project.parts"
-                :key="part"
+                v-for="part in project?.parts"
+                :key="part.name"
                 :style="part.purchased ? 'text-decoration: line-through' : ''">
                 <td>
                   <input
@@ -97,6 +97,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import { ref, computed } from 'vue'
 import { useDocumentStore } from '@/stores'
 import { Part, Project } from '@/models/Project'

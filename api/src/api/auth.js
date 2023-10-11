@@ -9,7 +9,7 @@ const router = express.Router();
 database.connect("users");
 
 router.post("/", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = await req.body;
 
   // email and password not in request
   if (!email || !password) {
@@ -21,7 +21,6 @@ router.post("/", async (req, res) => {
   }
 
   const user = await database.find("users", { email: email });
-
   // user not found
   if (!user) {
     res.json({
@@ -44,7 +43,11 @@ router.post("/", async (req, res) => {
   let token = user.token;
   if (!token) {
     token = uuidv4();
-    await database.update({ email: email }, { $set: { token: token } });
+    await database.update(
+      "users",
+      { email: email },
+      { $set: { token: token } }
+    );
   }
 
   res.json({

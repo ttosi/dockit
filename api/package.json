@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch src --ext js",
-    "start": "node ./src/app.js"
+    "start": "node ./src/app.js",
+    "build-web": "cd ../web && npm run build",
+    "build": "esbuild src/app.js --platform=node --bundle --minify --outfile=dist/app.js",
+    "publish": "npm run build-web && npm run build && scp -r -i ~/.ssh/gcp_rsa dist/* ttosi519@tdc.app:/home/ttosi519/sites/dockit/"
   },
   "author": "",
   "license": "MIT",
@@ -15,12 +18,13 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
+    "esbuild": "^0.19.4",
     "express": "^4.18.2",
     "mongodb": "^4.12.0",
     "node-fetch": "^3.2.10",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^3.0.1"
   }
 }

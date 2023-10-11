@@ -81,6 +81,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import { ref } from 'vue'
 import { useDateFormat } from '@vueuse/core'
 import { useDocumentStore } from '@/stores'

@@ -14,7 +14,6 @@ const network = {
     });
   },
   async get(endpoint) {
-    // console.log(`GET REQUEST: ${this.url}${endpoint}`);
     return await fetch(`${this.url}${endpoint}`, {
       method: "GET",
       headers: this.auth(),
@@ -23,7 +22,6 @@ const network = {
       .then((data) => data);
   },
   async put(endpoint, payload) {
-    // console.log(`PUT REQUEST: ${this.url}${endpoint}`);
     return await fetch(`${this.url}${endpoint}`, {
       method: "PUT",
       headers: {
@@ -39,7 +37,6 @@ const network = {
       .then((data) => data);
   },
   async post(endpoint, payload) {
-    // console.log(`POST REQUEST: ${this.url}${endpoint}`, payload);
     return await fetch(`${this.url}${endpoint}`, {
       method: "POST",
       headers: {

@@ -1,9 +1,6 @@
 import { MongoClient } from "mongodb";
-// or as an es module:
-// import { MongoClient } from 'mongodb'
 
-// Connection URL
-const url = "mongodb://dockit_rw:Mak1nt0%24h@tdc.app:27017/?authSource=dockit";
+const url = "mongodb://127.0.0.1:27017/";
 const client = new MongoClient(url);
 const dbName = "dockit";
 
@@ -12,28 +9,23 @@ async function main() {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
-  const collection = db.collection("projects");
+  const collection_projects = db.collection("projects");
 
-  // const insert = await collection.insertOne(seedData);
-  // console.log(insert);
+  const insert_projects = await collection_projects.insertOne(seedData);
+  console.log(insert_projects);
 
-  const find = await collection.find({}).toArray();
-  console.log(find);
+  const find_projects = await collection_projects.find({}).toArray();
+  console.log(find_projects);
 
-  // const del = await collection.deleteMany(
-  //    { email: "ttosi519@gmail.com" }
-  // );
-
-  // const update = await collection.updateOne(
-  //   { user: "ttosi519@gmail.com" },
-  //   { $set: { test: true } }
-  // );
-  // console.log(update);
-
-  // const remove = await collection.updateOne(
-  //   { user: "ttosi519@gmail.com" },
-  //   { $unset: { test: 1 } }
-  // );
+  const collection_users = db.collection("users");
+  const insert_user = await collection_users.insertOne({
+    email: "ttosi519@gmail.com",
+    password: "$2a$10$vJU8hHnYkVjDjolfQZQRtexLTGXNbshsp2bUTs.vSLB2b910jUKbi",
+    token: ""
+  });
+  console.log(insert_user);
+  const find_user = await collection_users.find({}).toArray();
+  console.log(find_user);
 
   return "done.";
 }

@@ -15,7 +15,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static("dist"));
+app.use(express.static("./web"));
 
 database.connect();
 
@@ -57,20 +57,6 @@ app.use(async (req, res, next) => {
 app.use("/document", document);
 app.use("/auth", auth);
 
-if (process.env.ENVIRONMENT === "local") {
-  http.createServer(app).listen(port, () => {
-    console.log(`listening locally on port ${port}`);
-  });
-} else {
-  https
-    .createServer(
-      {
-        key: fs.readFileSync("./keys/privkey.pem"),
-        cert: fs.readFileSync("./keys/cert.pem"),
-      },
-      app
-    )
-    .listen(port, () => {
-      console.log(`server ready on port ${port}`);
-    });
-}
+http.createServer(app).listen(port, () => {
+  console.log(`listening locally on port ${port}`);
+});
