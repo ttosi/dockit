@@ -1,19 +1,27 @@
 <template>
   <div class="card-body p-0" @dblclick="edit()">
-    <div
-      class="card-title p-2 pb-0 bg-base-300 text-sm font-semibold uppercase flex justify-between">
-      {{ props.project.name }}
-      <div class="flex gap-2 align-top font-extralight cursor-pointer">
-        <mdicon
-          name="pencil-outline"
-          size="16"
-          class="hover:text-slate-100"
-          @click="edit()" />
-        <mdicon
-          name="close-box-outline"
-          size="16"
-          class="hover:text-slate-100"
-          @click="removeProject(project)" />
+    <div class="flex justify-between">
+      <div class="card-title p-2 text-sm uppercase">
+        {{ props.project.name }}
+      </div>
+      <div>
+        <div class="flex gap-2 mt-2 mr-2.5 cursor-pointer">
+          <mdicon
+            name="note-outline"
+            size="16"
+            class="hover:text-slate-100"
+            @click="edit()" />
+          <mdicon
+            name="pencil-outline"
+            size="16"
+            class="hover:text-slate-100"
+            @click="edit()" />
+          <mdicon
+            name="close-box-outline"
+            size="16"
+            class="hover:text-slate-100"
+            @click="removeProject(project)" />
+        </div>
       </div>
     </div>
     <div class="px-2 font-light">

@@ -1,16 +1,11 @@
 import { MongoClient } from "mongodb";
 
-// const client = new MongoClient(process.env.DATABASE_URL);
-
 const database = {
-  url: process.env.DATABASE_URL,
-  // dbName: process.env.DATABASE_NAME,
-  // client: new MongoClient(process.env.DATABASE_URL),
   conn: undefined,
   async connect() {
-    const client = new MongoClient(process.env.DATABASE_URL);
+    const client = new MongoClient("mongodb://127.0.0.1:27017/");
     await client.connect();
-    this.conn = client.db(process.env.DATABASE_NAME);
+    this.conn = client.db("dockit");
   },
   async find(collection, filter) {
     const c = this.conn.collection(collection);

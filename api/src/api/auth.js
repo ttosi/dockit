@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import { database } from "../services/database.js";
 
 const router = express.Router();
-database.connect("users");
 
 router.post("/", async (req, res) => {
   const { email, password } = await req.body;
@@ -19,6 +18,7 @@ router.post("/", async (req, res) => {
   }
 
   const user = await database.find("users", { email: email });
+  
   // user not found
   if (!user) {
     res.json({

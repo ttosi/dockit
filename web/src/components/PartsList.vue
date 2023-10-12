@@ -8,7 +8,7 @@
             Parts List - {{ project.name }}
           </h3>
           <span>
-            {{ formatCurrency(total) }}
+            {{ totalAmount }}
           </span>
         </div>
         <hr />
@@ -98,9 +98,10 @@
 
 <script setup lang="ts">
 // @ts-nocheck
-import { ref, computed } from 'vue'
+import { ref, computed, compile } from 'vue'
 import { useDocumentStore } from '@/stores'
 import { Part, Project } from '@/models/Project'
+import { blob } from 'stream/consumers'
 
 const props = defineProps(['id'])
 const part = ref(new Part())
@@ -142,11 +143,12 @@ const formatCurrency = (val: number) => {
   })
 }
 
-const total = computed(() => {
-  if (project.parts.length > 0) {
-    return project.parts.reduce((a: number, c: Part) => a + c?.cost, 0)
-  }
-  return 0
+const totalAmount = computed(() => {
+  const amount = project.parts.reduce((a, b) => {
+    return a += b.quantity * b.cost
+  }, 0)
+
+  return formatCurrency(amount)
 })
 
 const print = () => {

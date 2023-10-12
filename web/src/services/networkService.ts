@@ -3,8 +3,7 @@ import { useCookies } from 'vue3-cookies'
 const { cookies } = useCookies()
 
 const networkService = {
-  url: '',
-  // url: 'http://127.0.0.1:3000',
+  url: import.meta.env.VITE_API_END_POINT,
   headers() {
     return {
       Accept: 'application/json',

@@ -27,7 +27,7 @@
                   @change="set(project), save()" />
               </td>
               <td>
-                {{ task.name }}
+                <span v-html="formattedTask(task.name)"></span>
               </td>
               <td class="grid text-right align-middle">
                 {{ useDateFormat(task.created, 'M/D/YYYY').value }}
@@ -82,7 +82,7 @@
 
 <script setup lang="ts">
 // @ts-nocheck
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useDateFormat } from '@vueuse/core'
 import { useDocumentStore } from '@/stores'
 import { Project, Task } from '@/models/Project'
@@ -109,6 +109,11 @@ const edit = (t: Task) => {
   task.value = project.tasks.splice(project.tasks.indexOf(t), 1)[0]
 }
 
+const formattedTask = (taskName) => {
+  var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+  return taskName.replace(urlPattern, '<a href="$&" target="_new" class="underline">$&</a>')
+}
+
 const remove = async (task: Task) => {
   if (confirm('Are you sure?')) {
     project.tasks.splice(project.tasks.indexOf(task), 1)
@@ -126,4 +131,5 @@ const print = () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

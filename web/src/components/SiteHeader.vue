@@ -2,7 +2,7 @@
   <header class="sticky flex justify-between p-3 bg-base-300 z-50">
     <div class="flex items-center justify-center gap-3 text-orange-400">
       <mdicon name="view-list" class="pt-0.5" />
-      <span class="text-xl font-semibold">Dockit</span>
+      <span class="text-xl font-semibold">Dockit v2</span>
     </div>
     <div class="flex justify-between items-center gap-2">
       <new-project-button class="mr-1" />

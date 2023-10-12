@@ -1,0 +1,17 @@
+{
+  "name": "dockit",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build-web": "cd ./web && npm run build",
+    "build-api": "esbuild ./api/src/app.js --platform=node --bundle --minify --outfile=dist/app.js",
+    "publish": "npm run build-web && npm run build-api && scp -r -i ~/.ssh/gcp_rsa dist/* ttosi519@tdc.app:/home/ttosi519/sites/dockit/ && ssh -i ~/.ssh/gcp_rsa ttosi519@tdc.app 'pm2 restart dockit'"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.19.4"
+  }
+}
